@@ -54,41 +54,41 @@ class HBNBCommand (cmd.Cmd):
         print(f"*** Unknown command: {line}")
         
     def update_dict(self, classname, uid, s_dict):
-    """Helper method for update() with a dictionary."""
-    s = s_dict.replace("'", '"')
+        """Helper method for update() with a dictionary."""
+        s = s_dict.replace("'", '"')
 
-    try:
-        d = json.loads(s)
-    except json.JSONDecodeError:
-        print("** error: dictionary not valid JSON **")
-        return
+        try:
+            d = json.loads(s)
+        except json.JSONDecodeError:
+            print("** error: dictionary not valid JSON **")
+            return
 
-    if not classname:
-        print("** class name missing **")
-        return
-    if classname not in storage.classes():
-        print("** class doesn't exist **")
-        return
-    if not uid:
-        print("** instance id missing **")
-        return
+        if not classname:
+            print("** class name missing **")
+            return
+        if classname not in storage.classes():
+            print("** class doesn't exist **")
+            return
+        if not uid:
+            print("** instance id missing **")
+            return
 
-    key = "{}.{}".format(classname, uid)
-    if key not in storage.all():
-        print("** no instance found **")
-        return
+        key = "{}.{}".format(classname, uid)
+        if key not in storage.all():
+            print("** no instance found **")
+            return
 
-    attributes = storage.attributes().get(classname, {})
-    instance = storage.all()[key]
-    for attribute, value in d.items():
-        if attribute in attributes:
-            try:
-                value = attributes[attribute](value)
-            except (ValueError, TypeError):
-                print(f"** error: wrong type for {attribute} **")
-                continue
-        setattr(instance, attribute, value)
-    instance.save()
+        attributes = storage.attributes().get(classname, {})
+        instance = storage.all()[key]
+        for attribute, value in d.items():
+            if attribute in attributes:
+                try:
+                    value = attributes[attribute](value)
+                except (ValueError, TypeError):
+                    print(f"** error: wrong type for {attribute} **")
+                    continue
+            setattr(instance, attribute, value)
+        instance.save()
 
     def do_EOF(self, line):
         """Handles End Of File character."""
@@ -178,10 +178,10 @@ class HBNBCommand (cmd.Cmd):
         print(len(matches))
 
         def do_update(self, line):
-        """Updates an instance by adding or updating attribute."""
-        if not line:
-            print("** class name missing **")
-            return
+            """Updates an instance by adding or updating attribute."""
+            if not line:
+                print("** class name missing **")
+                return
 
         rex = r'^(\S+)(?:\s(\S+)(?:\s(\S+)(?:\s((?:"[^"]*")|(?:(\S)+)))?)?)?'
         match = re.search(rex, line)
